@@ -105,10 +105,3 @@ def user_info():
     print(f'User ID: {t["id"]}')
     print(f'Nitro: {nitro}')
     input()
-
-
-def typing(ch_id):
-    task = threading.currentThread()
-    while getattr(task, 'run', True):
-        requests.post(f'https://discordapp.com/api/v6/channels/{ch_id}/typing', headers={'authorization': Me.token})
-        time.sleep(10)

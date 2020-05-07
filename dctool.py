@@ -1,4 +1,5 @@
-from client import Client
+import Client
+import Exploits
 import requests
 import traceback
 import time
@@ -47,14 +48,14 @@ gen_menu.append_item(FunctionItem('Download avatar', input))
 
 exploit_menu = ConsoleMenu('Exploits and misc features')
 exploit_menu.append_item(FunctionItem('Infinite typing', create_task, 
-    ['Infinite typing', Client.typing, 'Channel ID']
+    ['Infinite typing', Exploits.typing, 'Channel ID']
 ))
 exploit_menu.append_item(FunctionItem('Status changer', input))
 exploit_menu.append_item(FunctionItem('Mutual friend finder', input))
 exploit_menu.append_item(FunctionItem('IP logger', input))
 exploit_menu.append_item(FunctionItem('Crash link', input))
 exploit_menu.append_item(FunctionItem('Read notification', input))
-exploit_menu.append_item(FunctionItem('Local Storage reassembly', input))
+exploit_menu.append_item(FunctionItem('Local Storage reassembly', Exploits.reassembly))
 
 tasks_menu = ConsoleMenu('Terminate running tasks')
 
