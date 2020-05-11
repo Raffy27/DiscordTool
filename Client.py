@@ -30,8 +30,8 @@ def login():
     global Me
     Me = MainUser(json.loads(r.text), token)
 
-def get_avatar(id, avatar):
-    r = requests.get(f'https://cdn.discordapp.com/avatars/{id}/{avatar}.png?size=64')
+def get_avatar(id, avatar, size = '64'):
+    r = requests.get(f'https://cdn.discordapp.com/avatars/{id}/{avatar}.png?size=' + size)
     if r.status_code == 200:
         return r.content
     return ''
@@ -104,4 +104,22 @@ def user_info():
     print(f'\nUsername: {t["username"]}#{t["discriminator"]}')
     print(f'User ID: {t["id"]}')
     print(f'Nitro: {nitro}')
+    input()
+
+def download_avatar():
+    user_id = input('User ID: ')
+    r = requests.get(f'https://discordapp.com/api/v6/users/{user_id}/profile', headers={'authorization': Me.token})
+    if not r.status_code == 200:
+        print('Failed to get user info.')
+        input()
+        return
+    t = json.loads(r.text)
+    t = t['user']
+    img_content = get_avatar(t['id'], t['avatar'], '512')
+    if img_content == '':
+        print('[No Avatar]')
+    else:
+        img = Image.open(io.BytesIO(img_content))
+        img.save(user_id + '.png', 'png')
+        print('Avatar saved!')
     input()

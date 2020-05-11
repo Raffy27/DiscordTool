@@ -44,7 +44,7 @@ gen_menu.append_item(FunctionItem('Send message', Client.send_message))
 gen_menu.append_item(FunctionItem('Send file', Client.send_file))
 gen_menu.append_item(FunctionItem('Bulk send', input))
 gen_menu.append_item(FunctionItem('User info', Client.user_info))
-gen_menu.append_item(FunctionItem('Download avatar', input))
+gen_menu.append_item(FunctionItem('Download avatar', Client.download_avatar))
 
 exploit_menu = ConsoleMenu('Exploits and misc features')
 exploit_menu.append_item(FunctionItem('Infinite typing', create_task, 
