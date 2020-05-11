@@ -34,7 +34,7 @@ def create_task(name, main, *arg):
     task_menu.args.append(task_menu)
     tasks_menu.append_item(task_menu)
     task.start()
-    print(name, 'started!')
+    print('Started successfully.')
     input()
 
 Client.login()
@@ -50,7 +50,9 @@ exploit_menu = ConsoleMenu('Exploits and misc features')
 exploit_menu.append_item(FunctionItem('Infinite typing', create_task, 
     ['Infinite typing', Exploits.typing, 'Channel ID']
 ))
-exploit_menu.append_item(FunctionItem('Status changer', input))
+exploit_menu.append_item(FunctionItem('Status changer', create_task,
+    ['Status changer', Exploits.status_changer]
+))
 exploit_menu.append_item(FunctionItem('Mutual friend finder', input))
 exploit_menu.append_item(FunctionItem('IP logger', input))
 exploit_menu.append_item(FunctionItem('Crash link', input))
