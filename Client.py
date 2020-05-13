@@ -123,3 +123,14 @@ def download_avatar():
         img.save(user_id + '.png', 'png')
         print('Avatar saved!')
     input()
+
+def get_servers():
+    r = requests.get(f'https://discordapp.com/api/v6/users/@me/guilds', headers={'authorization': Me.token})
+    if not r.status_code == 200:
+        print('Failed to get the list of servers.')
+        input()
+        return
+    t = json.loads(r.text)
+    for srv in t:
+        print(f'[{srv["id"]}] {srv["name"]}')
+    input()

@@ -44,6 +44,8 @@ gen_menu.append_item(FunctionItem('Send message', Client.send_message))
 gen_menu.append_item(FunctionItem('Send file', Client.send_file))
 gen_menu.append_item(FunctionItem('Bulk send', input))
 gen_menu.append_item(FunctionItem('User info', Client.user_info))
+gen_menu.append_item(FunctionItem('Server list', Client.get_servers))
+gen_menu.append_item(FunctionItem('Server members', input))
 gen_menu.append_item(FunctionItem('Download avatar', Client.download_avatar))
 
 exploit_menu = ConsoleMenu('Exploits and misc features')
