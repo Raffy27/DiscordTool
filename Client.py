@@ -85,14 +85,26 @@ def send_file():
         print('Failed to send message:', r.status_code)
     input()
 
-def user_info():
-    user_id = input('User ID: ')
+def user_info_raw(user_id):
     r = requests.get(f'https://discordapp.com/api/v6/users/{user_id}/profile', headers={'authorization': Me.token})
     if not r.status_code == 200:
+        return None
+    return json.loads(r.text)
+
+def mutual_friends_raw(user_id):
+    r = requests.get(f'https://discordapp.com/api/v6/users/{user_id}/relationships', headers={'authorization': Me.token})
+    if not r.status_code == 200:
+        return None
+    return json.loads(r.text)
+
+def user_info():
+    user_id = input('User ID: ')
+    t = user_info_raw(user_id)
+    print(t)
+    if t == None:
         print('Failed to get user info.')
         input()
         return
-    t = json.loads(r.text)
     nitro = not t['premium_since'] == None
     t = t['user']
     img_content = get_avatar(t['id'], t['avatar'])
@@ -108,12 +120,11 @@ def user_info():
 
 def download_avatar():
     user_id = input('User ID: ')
-    r = requests.get(f'https://discordapp.com/api/v6/users/{user_id}/profile', headers={'authorization': Me.token})
-    if not r.status_code == 200:
+    t = user_info_raw(user_id)
+    if t == None:
         print('Failed to get user info.')
         input()
         return
-    t = json.loads(r.text)
     t = t['user']
     img_content = get_avatar(t['id'], t['avatar'], '512')
     if img_content == '':
@@ -124,13 +135,24 @@ def download_avatar():
         print('Avatar saved!')
     input()
 
-def get_servers():
+def get_member_count(srv_id):
+    r = requests.get(f'https://discordapp.com/api/v6/guilds/{srv_id}?with_counts=true', headers={'authorization': Me.token})
+    if not r.status_code == 200:
+        return -1
+    return json.loads(r.text)['approximate_member_count']
+
+def get_servers_raw():
     r = requests.get(f'https://discordapp.com/api/v6/users/@me/guilds', headers={'authorization': Me.token})
     if not r.status_code == 200:
-        print('Failed to get the list of servers.')
+        return None
+    return json.loads(r.text)
+
+def get_servers():
+    t = get_servers_raw()
+    if t == None:
+        print('Filed to get the list of servers')
         input()
         return
-    t = json.loads(r.text)
     for srv in t:
         print(f'[{srv["id"]}] {srv["name"]}')
     input()

@@ -32,7 +32,7 @@ canscroll = true;
 scroller = setInterval(() => {
 	if(!canscroll) return;
 	canscroll = false;
-	sc.scrollBy(0, sc.offsetHeight);
+	sc.scrollBy(0, sc.offsetHeight / 2);
 	if(sc.scrollHeight - sc.scrollTop == sc.offsetHeight){
 		clearInterval(scroller);
 		window.done = true;

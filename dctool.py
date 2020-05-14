@@ -55,7 +55,7 @@ exploit_menu.append_item(FunctionItem('Infinite typing', create_task,
 exploit_menu.append_item(FunctionItem('Status changer', create_task,
     ['Status changer', Exploits.status_changer]
 ))
-exploit_menu.append_item(FunctionItem('Mutual friend finder', input))
+exploit_menu.append_item(FunctionItem('Friend finder', Exploits.friend_list))
 exploit_menu.append_item(FunctionItem('IP logger', input))
 exploit_menu.append_item(FunctionItem('Crash link', Exploits.crash_link))
 exploit_menu.append_item(FunctionItem('Read notification', input))
