@@ -85,15 +85,21 @@ def send_file():
         print('Failed to send message:', r.status_code)
     input()
 
-def user_info_raw(user_id):
+def user_info_raw(user_id, retry = True):
     r = requests.get(f'https://discordapp.com/api/v6/users/{user_id}/profile', headers={'authorization': Me.token})
     if not r.status_code == 200:
+        if retry:
+            if r.status_code == 429:
+                lim = json.loads(r.text)
+                time.sleep(lim['retry_after'] / 1000)
+                return user_info_raw(user_id, True)
         return None
     return json.loads(r.text)
 
 def mutual_friends_raw(user_id):
     r = requests.get(f'https://discordapp.com/api/v6/users/{user_id}/relationships', headers={'authorization': Me.token})
     if not r.status_code == 200:
+        print('Ratelimit?')
         return None
     return json.loads(r.text)
 
