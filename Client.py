@@ -58,7 +58,7 @@ def send_raw_message(ch_id, msg, fpath = ''):
     files = {}
     if not fpath == '':
         files['file'] = (fpath.split('\\')[-1], open(fpath, 'rb').read())
-    r = requests.post(f'https://discordapp.com/api/v6/channels/{ch_id}/messages',
+    r = requests.post(f'https://discord.com/api/v6/channels/{ch_id}/messages',
         headers={'authorization': Me.token},
         data=data, files=files
     )
@@ -86,7 +86,7 @@ def send_file():
     input()
 
 def user_info_raw(user_id, retry = True):
-    r = requests.get(f'https://discordapp.com/api/v6/users/{user_id}/profile', headers={'authorization': Me.token})
+    r = requests.get(f'https://discord.com/api/v6/users/{user_id}/profile', headers={'authorization': Me.token})
     if not r.status_code == 200:
         if retry:
             if r.status_code == 429:
@@ -97,9 +97,8 @@ def user_info_raw(user_id, retry = True):
     return json.loads(r.text)
 
 def mutual_friends_raw(user_id):
-    r = requests.get(f'https://discordapp.com/api/v6/users/{user_id}/relationships', headers={'authorization': Me.token})
+    r = requests.get(f'https://discord.com/api/v6/users/{user_id}/relationships', headers={'authorization': Me.token})
     if not r.status_code == 200:
-        print('Ratelimit?')
         return None
     return json.loads(r.text)
 
@@ -142,13 +141,13 @@ def download_avatar():
     input()
 
 def get_member_count(srv_id):
-    r = requests.get(f'https://discordapp.com/api/v6/guilds/{srv_id}?with_counts=true', headers={'authorization': Me.token})
+    r = requests.get(f'https://discord.com/api/v6/guilds/{srv_id}?with_counts=true', headers={'authorization': Me.token})
     if not r.status_code == 200:
         return -1
     return json.loads(r.text)['approximate_member_count']
 
 def get_servers_raw():
-    r = requests.get(f'https://discordapp.com/api/v6/users/@me/guilds', headers={'authorization': Me.token})
+    r = requests.get(f'https://discord.com/api/v6/users/@me/guilds', headers={'authorization': Me.token})
     if not r.status_code == 200:
         return None
     return json.loads(r.text)
@@ -161,4 +160,31 @@ def get_servers():
         return
     for srv in t:
         print(f'[{srv["id"]}] {srv["name"]}')
+    input()
+
+def create_list():
+    import Members
+    input()
+
+def bulk_send():
+    ch_id = input('Channel ID: ')
+    msg = input('Message: ')
+    count = int(input('Count: '))
+    print('Sending messages...')
+    for i in range(count):
+        sent = False
+        while not sent:
+            r = send_raw_message(ch_id, msg)
+            if not r.status_code == 200:
+                if r.status_code == 429:
+                    lim = json.loads(r.text)
+                    time.sleep(lim['retry_after'] / 1000)
+                else:
+                    print('Unknown response encountered:', r.status_code)
+                    input()
+                    return
+            else:
+                sent = True
+        print(f'\tSent {i+1}/{count} -> ~{((i+1)*100/count):.2f}%', end='\r')
+    print('\nDone')
     input()
