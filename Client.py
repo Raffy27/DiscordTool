@@ -102,10 +102,35 @@ def mutual_friends_raw(user_id):
         return None
     return json.loads(r.text)
 
+def flag_value(flag):
+    arr = {
+        0: 'None',
+        1 << 0: 'Discord Employee',
+        1 << 1: 'Discord Partner',
+        1 << 2: 'HypeSquad Events',
+        1 << 3: 'Bug Hunter Level 1',
+        1 << 6: 'House Bravery',
+        1 << 7: 'House Brilliance',
+        1 << 8: 'House Balance',
+        1 << 9: 'Early Supporter',
+        1 << 10: 'Team User',
+        1 << 11: 'Magic Man Level 1',
+        1 << 12: 'System',
+        1 << 11: 'Magic Man Level 2',
+        1 << 14: 'Bug Hunter Level 2',
+        1 << 15: 'Magic Man Level 3',
+        1 << 16: 'Verified Bot',
+        1 << 17: 'Verified Bot Developer'
+    }
+    try:
+        return arr[flag]
+    except:
+        return 'Unknown'
+
 def user_info():
     user_id = input('User ID: ')
     t = user_info_raw(user_id)
-    print(t)
+    # print(t)
     if t == None:
         print('Failed to get user info.')
         input()
@@ -120,7 +145,10 @@ def user_info():
         img2ascii.print_img(img, (32,32), 'o', 1, True)
     print(f'\nUsername: {t["username"]}#{t["discriminator"]}')
     print(f'User ID: {t["id"]}')
-    print(f'Nitro: {nitro}')
+    print(f'Premium: {nitro}')
+    print(f'Public Flags: {flag_value(t["public_flags"])}')
+    print(f'Private Flags: {flag_value(t["flags"])}')
+    print(f'Bot: {"bot" in t}')
     input()
 
 def download_avatar():
