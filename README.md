@@ -1,5 +1,9 @@
 # DiscordTool
+<<<<<<< HEAD
 A customizable command line tool for advanced Discord users.
+=======
+A customizable command line tool for advanced Discord users
+>>>>>>> 4780c6893a5a01b7bee9d9c585cf18f5d4761985
 
 ## Features
 ### General
@@ -19,6 +23,7 @@ Tricks and miscellaneous actions
 * Crash link (used to crash the victim's client when they hovered over it)
 * Local Storage Reassembly (potential attack vector that abuses the Cache)
 
+<<<<<<< HEAD
 ### <a href="https://gist.github.com/Raffy27/48f366b49a2a0f298f697669c35fbd8e" target="_blank">Local Storage Reassembly Writeup</a>
 
 ## Dependencies
@@ -35,6 +40,10 @@ Install dependencies with
 ```shell
 pip install -r requirements.txt
 ```
+=======
+## Dependencies
+
+>>>>>>> 4780c6893a5a01b7bee9d9c585cf18f5d4761985
 
 ## License
 This project is licensed under the MIT License -  see the <a href="https://github.com/Raffy27/DiscordTool/blob/master/LICENSE" target="_blank">LICENSE</a> file for details. For the dependencies, all rights belong to their respective owners. These should be used according to their respective licenses.
