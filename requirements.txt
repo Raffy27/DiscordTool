@@ -2,4 +2,4 @@ selenium==3.141.0
 console_menu==0.6.0
 requests==2.22.0
 colorama==0.4.1
-Pillow==8.2.0
+Pillow==8.3.2
